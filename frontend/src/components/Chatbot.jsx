@@ -27,7 +27,7 @@ export default function Chatbot() {
 
     const data = await res.json();
 
-    setChat([...newChat, { sender: "bot", text: data.reply }]);
+    setChat([...newChat, { sender: "bot", text: data.reply }]);   
   };
 
   return (
