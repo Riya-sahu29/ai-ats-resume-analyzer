@@ -1,6 +1,7 @@
 import ResumeForm from "../components/ResumeForm";
 import Results from "../components/Results";
 import { useState } from "react";
+import Chatbot from "../components/Chatbot";
 
 export default function Analyzer() {
   const [result, setResult] = useState(null);
@@ -25,6 +26,11 @@ export default function Analyzer() {
             Upload resume to see results
           </p>
         )}
+
+        {/* Add chatbot here */}
+        <div className="mt-10">
+          <Chatbot />
+        </div>
 
       </div>
     </div>

@@ -3,8 +3,15 @@ from fastapi.middleware.cors import CORSMiddleware
 import PyPDF2
 
 from resume_ai import analyze_resume_with_ai
+from chatbot import chat_with_ai
+from pydantic import BaseModel
 
 app = FastAPI()
+
+class ChatRequest(BaseModel):
+    user_id: str
+    message: str
+    resume_context: str = None
 
 # Enable CORS for frontend
 app.add_middleware(
@@ -52,5 +59,15 @@ async def analyze_resume(
     result = analyze_resume_with_ai(resume_text, job_description)
 
     return result
+
+@app.post("/chat")
+def chat(req: ChatRequest):
+    reply = chat_with_ai(
+        req.user_id,
+        req.message,
+        req.resume_context
+    )
+
+    return {"reply": reply}
 
 # Software Development experience with python, Flask, APIs, database, and backend system.
