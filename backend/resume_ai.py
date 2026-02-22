@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-client = Groq(api_key=os.getenv("GROQ_API_KEY"))
+client = Groq(api_key=os.getenv("GROQ_API_KEY")) 
 
 def analyze_resume_with_ai(resume_text, job_text):
 
@@ -52,7 +52,7 @@ JOB DESCRIPTION:
         print("\nRaw AI OUTPUT:\n", raw_output)
 
         import re
-        match = re.search(r"\{.*\}", raw_output, re.DOTALL)
+        match = re.search(r"\{.*\}", raw_output, re.DOTALL) 
 
         if not match:
             return {"error": "AI returned no valid JSON", "raw": raw_output}
