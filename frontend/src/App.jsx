@@ -28,4 +28,4 @@ export default function App() {
 
 
 
-// Software developer with experience in Python, Flask, APIs, databases, Git, and backend systems.
+
