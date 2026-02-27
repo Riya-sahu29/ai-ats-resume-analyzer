@@ -12,7 +12,7 @@ def chat_with_ai(user_id: str, message: str, resume_context: str = None):
 
     try:
 
-        # 1. System message
+        # 1. System message  
         messages = [
             {
                 "role": "system",
@@ -64,7 +64,7 @@ def chat_with_ai(user_id: str, message: str, resume_context: str = None):
         response = client.chat.completions.create(
             model="llama3-8b-8192",
             messages=messages,
-            temperature=0.7
+            temperature=0.7 
         )
 
         reply = response.choices[0].message.content
@@ -78,10 +78,10 @@ def chat_with_ai(user_id: str, message: str, resume_context: str = None):
             }
         )
 
-        return reply
+        return reply 
 
     except Exception as e:
 
         print("ERROR in chat_with_ai:", str(e))
 
-        return "Error: AI response failed"
+        return "Error: AI response failed"  
