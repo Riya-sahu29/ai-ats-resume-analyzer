@@ -14,7 +14,7 @@ Built using FastAPI, React, MongoDB, and Groq AI.
 ✅ FastAPI REST Backend
 ✅ Modern React + Tailwind Frontend
 ✅ MongoDB Database Integration
-✅ Real-world production-level project
+✅ Real-world production-level project  
 
 ---
 
