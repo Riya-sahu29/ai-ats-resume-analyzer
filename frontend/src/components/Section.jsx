@@ -17,3 +17,4 @@ export default function Section({ title, items }) {
     </div>
   );
 }
+                                         
