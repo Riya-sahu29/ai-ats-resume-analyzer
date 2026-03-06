@@ -16,8 +16,8 @@ export default function Hero() {
         <Link to="/analyzer">
           <button className="px-6 py-3 bg-indigo-600 rounded text-white">
             Analyze My Resume
-          </button>
-        </Link>
+          </button> 
+        </Link>   
       </div>
 
     </section>
