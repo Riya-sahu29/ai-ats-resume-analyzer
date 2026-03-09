@@ -52,7 +52,7 @@ Built using FastAPI, React, MongoDB, and Groq AI.
 
 ---
 
-# 📂 Project Structure
+# 📂 Project Structure 
 
 ```
 ai-ats-resume-analyzer/
@@ -211,7 +211,7 @@ https://github.com/Riya-sahu29
 
 ✔ Full-Stack Application
 ✔ AI Integration
-✔ Database Memory
+✔ Database Memory  
 ✔ REST API Development
 ✔ Production Architecture
 
