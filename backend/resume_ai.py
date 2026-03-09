@@ -9,7 +9,7 @@ load_dotenv()
 client = Groq(api_key=os.getenv("GROQ_API_KEY")) 
 
 def analyze_resume_with_ai(resume_text, job_text):
-
+ 
     if len(resume_text.strip()) < 100:
         return {"error": "Resume text too short or unreadable"}
 
@@ -62,4 +62,4 @@ JOB DESCRIPTION:
         return parsed
 
     except Exception as e:
-        return {"error": f"AI request failed: {str(e)}"}
+        return {"error": f"AI request failed: {str(e)}"}                     
