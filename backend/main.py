@@ -8,11 +8,11 @@ from pydantic import BaseModel
 
 app = FastAPI()
 
-class ChatRequest(BaseModel):
+class ChatRequest(BaseModel):      
     user_id: str
     message: str
     resume_context: str = None
-
+                          
 # Enable CORS for frontend
 app.add_middleware(
     CORSMiddleware,
@@ -66,7 +66,7 @@ def chat(req: ChatRequest):
         req.user_id,
         req.message,
         req.resume_context
-    )
+    )       
 
     return {"reply": reply}
 
