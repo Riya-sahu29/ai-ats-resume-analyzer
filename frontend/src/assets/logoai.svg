@@ -1,0 +1,16 @@
+<svg width="220" height="60" viewBox="0 0 220 60" xmlns="http://www.w3.org/2000/svg">
+  <rect width="220" height="60" rx="12" fill="#F9FAFB"></rect>
+  
+  <!-- AI icon -->
+  <circle cx="35" cy="30" r="18" fill="#FDBA74"></circle>
+  <path d="M28 36 L35 20 L42 36" stroke="white" stroke-width="3" fill="none"></path>
+  <line x1="31" y1="30" x2="39" y2="30" stroke="white" stroke-width="3"></line>
+
+  <!-- Text -->
+  <text x="65" y="28" font-family="Arial, sans-serif" font-size="16" fill="#1F2937" font-weight="bold">
+    AI Resume
+  </text>
+  <text x="65" y="45" font-family="Arial, sans-serif" font-size="14" fill="#3B82F6">
+    Analyzer
+  </text>
+</svg>
