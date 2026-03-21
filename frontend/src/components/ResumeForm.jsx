@@ -1,3 +1,4 @@
+
 import axios from "axios";
 import { useState } from "react";
 
@@ -37,13 +38,13 @@ export default function ResumeForm({ setResult }) {
   };
 
   return (
-    <div className="space-y-4 bg-black/40 p-6 rounded border border-white/10">
+    <div className="space-y-4 bg-white p-6 rounded-xl shadow border border-blue-100">
 
       <input 
         type="file" 
         accept="application/pdf"
         onChange={(e) => setFile(e.target.files[0])}
-        className="w-full p-2 border rounded bg-transparent"
+        className="w-full p-3 border border-blue-200 rounded text-gray-900"
       />
 
       <textarea
@@ -51,13 +52,13 @@ export default function ResumeForm({ setResult }) {
         value={jobDesc}
         onChange={(e) => setJobDesc(e.target.value)}
         rows={5}
-        className="w-full p-2 border rounded bg-transparent"
+        className="w-full p-3 border border-blue-200 rounded text-gray-900"
       />
 
       <button 
         onClick={handleSubmit}
         disabled={loading}
-        className="w-full py-2 bg-indigo-600 text-white rounded"
+        className="w-full py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg font-semibold"
       >
         {loading ? "Analyzing..." : "Analyze Resume"}
       </button>
