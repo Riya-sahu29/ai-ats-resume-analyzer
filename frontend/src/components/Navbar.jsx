@@ -1,46 +1,28 @@
-// import { Link } from "react-router-dom";
-
-// export default function Navbar() {
-//   return (
-//     <nav className="navbar">
-//       <div className="logo">AI Resume</div>
-
-//       <div className="nav-links">
-//         <Link className="nav-btn" to="/">Home</Link>
-//         <Link className="nav-btn primary" to="/analyzer">Analyzer</Link>
-//       </div>
-//     </nav>
-//   );
-// }
 
 
 import { Link } from "react-router-dom";
 
+import logo from "../assets/logoai.svg";
+
 export default function Navbar() {
   return (
-    <nav className="w-full fixed top-0 z-50 bg-slate-950 border-b border-slate-800">
-      <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+    <nav className="flex justify-between items-center p-4 bg-white shadow">
 
-        {/* Logo */}
-        <Link to="/" className="text-xl font-bold text-white">
-          AI Resume
-        </Link>
-
-        {/* Links */}
-        <div className="flex gap-6 items-center">
-          <Link to="/" className="text-gray-300 hover:text-white transition">
-            Home
-          </Link>
-
-          <Link 
-            to="/analyzer" 
-            className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition font-medium"
-          >
-            Analyzer
-          </Link>
-        </div>
-
+      {/* Left side logo */}
+      <div className="flex items-center gap-2">
+        <img src={logo} alt="AI Resume Analyzer" className="h-10" />
+        <span className="text-xl font-bold text-orange-500">
+          AI Resume Analyzer
+        </span>
       </div>
+
+      {/* Menu */}
+      <div className="hidden md:flex gap-6 text-gray-800 font-medium">
+        <a href="/" className="hover:text-orange-500">Home</a>
+        <a href="/analyze" className="hover:text-orange-500">Analyze</a>
+        <a href="/chat" className="hover:text-orange-500">AI Chat</a>
+      </div>
+
     </nav>
   );
 }
