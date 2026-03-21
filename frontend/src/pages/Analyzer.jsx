@@ -7,13 +7,13 @@ export default function Analyzer() {
   const [result, setResult] = useState(null);
 
   return (
-    <div className="min-h-screen p-10">
+    <div className="min-h-screen bg-gray-50 p-10 px-4">
 
-      <h1 className="text-3xl font-bold text-center mb-6">
+      <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">
         AI ATS Resume Analyzer
       </h1>
 
-      <div className="max-w-3xl mx-auto space-y-6">
+      <div className="max-w-3xl mx-auto space-y-6 bg-white p-6 rounded-xl shadow">
 
         {/* Upload form */}
         <ResumeForm setResult={setResult} />
@@ -36,3 +36,4 @@ export default function Analyzer() {
     </div>
   );
 }
+
