@@ -1,25 +1,41 @@
+
+
 import { Link } from "react-router-dom";
 
 export default function Hero() {
   return (
-    <section className="min-h-screen flex items-center justify-center text-center px-6">
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center">
 
-      <div className="max-w-3xl">
-        <h1 className="text-5xl font-bold mb-6">
-          AI-Powered Resume <span className="text-indigo-500">Analyzer</span>
+      <div className="text-center max-w-3xl px-6">
+
+        <h1 className="text-4xl font-bold text-gray-800">
+          AI Powered Resume Analyzer
         </h1>
 
-        <p className="text-gray-400 mb-8">
-          Improve ATS score and get hired faster using AI insights.
+        <p className="mt-4 text-gray-600 text-lg">
+          Upload your resume and get ATS score and AI feedback instantly.
         </p>
 
-        <Link to="/analyzer">
-          <button className="px-6 py-3 bg-indigo-600 rounded text-white">
-            Analyze My Resume
-          </button> 
-        </Link>   
+        <div className="mt-6 flex justify-center gap-4">
+
+          <Link
+            to="/analyze"
+            className="bg-orange-400 text-white px-6 py-3 rounded-lg"
+          >
+            Analyze Resume
+          </Link>
+
+          <Link
+            to="/chat"
+            className="bg-blue-500 text-white px-6 py-3 rounded-lg"
+          >
+            AI Chat
+          </Link>
+
+        </div>
+
       </div>
 
-    </section>
+    </div>
   );
 }
