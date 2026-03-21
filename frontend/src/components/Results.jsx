@@ -2,13 +2,13 @@ export default function Results({ result }) {
   if (!result) return null;
 
   return (
-    <div className="mt-6 space-y-4 bg-black/40 p-6 rounded border border-white/10">
+    <div className="bg-white p-6 rounded-xl shadow border border-blue-100 text-gray-800">
 
-      <h2 className="text-xl font-bold">
+      <h2 className="text-xl font-bold text-blue-600 mb-4">
         ATS Score: {result.ats_score ?? "N/A"}%
       </h2>
 
-      <h3>
+      <h3 className="text-gray-900 font-semibold mb-4">
         Verdict: {result.verdict ?? "N/A"}
       </h3>
 
@@ -26,8 +26,8 @@ function Section({ title, items }) {
 
   return (
     <div>
-      <h4 className="font-semibold mt-3">{title}</h4>
-      <ul className="list-disc ml-6 text-gray-300">
+      <h4 className="text-gray-900 font-semibold mb-2">{title}</h4>
+      <ul className="list-disc ml-6 text-gray-700 space-y-1">
         {items.map((item, i) => (
           <li key={i}>{item}</li>
         ))}
