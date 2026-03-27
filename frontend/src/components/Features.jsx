@@ -1,40 +1,3 @@
-
-
-// import React from "react";
-
-// const Features = () => {
-//   return (
-//     <div className="features-grid">
-//       <div className="feature-card">
-//         <div className="icon">📄</div>
-//         <h3>Resume ATS Scoring</h3>
-//         <p>Get instant feedback on how ATS systems read your resume.</p>
-//       </div>
-
-//       <div className="feature-card">
-//         <div className="icon">🧠</div>
-//         <h3>AI Skill Gap Analysis</h3>
-//         <p>Identify missing skills and improve your profile.</p>
-//       </div>
-
-//       <div className="feature-card">
-//         <div className="icon">💼</div>
-//         <h3>Job Match Feedback</h3>
-//         <p>See how well your resume matches job postings.</p>
-//       </div>
-
-//       <div className="feature-card">
-//         <div className="icon">🚀</div>
-//         <h3>Hiring Readiness Score</h3>
-//         <p>Measure your overall readiness for recruiters.</p>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Features;
-
-
 import React from "react";
 
 const Features = () => {
@@ -66,10 +29,10 @@ const Features = () => {
       
       {/* Section Title */}
       <div className="text-center mb-14">
-        <h2 className="text-4xl font-bold text-white">
+        <h2 className="text-2xl md:text-4xl font-bold text-white">
           Powerful AI Features
         </h2>
-        <p className="text-gray-400 mt-3">
+        <p className="text-gray-400 mt-3 text-sm md:text-base">
           Everything you need to optimize your resume and get hired faster
         </p>
       </div>
@@ -94,17 +57,17 @@ const Features = () => {
           >
             
             {/* Icon */}
-            <div className="text-5xl mb-4">
+            <div className="text-4xl md:text-5xl mb-4">
               {feature.icon}
             </div>
 
             {/* Title */}
-            <h3 className="text-xl font-semibold text-white mb-2">
+            <h3 className="text-lg md:text-xl font-semibold text-white mb-2">
               {feature.title}
             </h3>
 
             {/* Description */}
-            <p className="text-gray-400 text-sm">
+            <p className="text-gray-400 text-xs md:text-sm">
               {feature.desc}
             </p>
 
