@@ -31,14 +31,14 @@ export default function Chatbot() {
   };
 
   return (
-    <div className="bg-slate-900 p-6 rounded-xl shadow-lg max-w-3xl mx-auto">
+    <div className="bg-white border-2 border-blue-500 p-6 rounded-xl shadow-lg max-w-3xl mx-auto transition duration-300 hover:shadow-2xl hover:-translate-y-1">
 
-      <h2 className="text-2xl font-bold text-center mb-4">
+      <h2 className="text-xl md:text-2xl font-bold text-center mb-4 text-black">
         AI Career Assistant
       </h2>
 
       {/* Chat messages */}
-      <div className="bg-slate-800 h-80 overflow-y-auto p-4 rounded mb-4">
+      <div className="bg-gray-50 h-80 overflow-y-auto p-4 rounded mb-4 border border-blue-200 text-sm md:text-base">
         {chat.map((msg, index) => (
           <div
             key={index}
@@ -54,19 +54,19 @@ export default function Chatbot() {
       </div>
 
       {/* Input */}
-      <div className="flex gap-2">
+      <div className="flex flex-col sm:flex-row gap-2">
 
         <input
           type="text"
           placeholder="Ask anything..."
           value={message}
           onChange={(e) => setMessage(e.target.value)}
-          className="flex-1 p-2 rounded bg-slate-700 text-white outline-none"
+          className="flex-1 p-2 rounded border border-blue-300 bg-white text-black text-sm md:text-base outline-none w-full"
         />
 
         <button
           onClick={sendMessage}
-          className="bg-blue-600 px-4 py-2 rounded hover:bg-blue-700"
+          className="w-full sm:w-auto bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 text-sm md:text-base"
         >
           Send
         </button>

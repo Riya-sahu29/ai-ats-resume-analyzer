@@ -16,7 +16,13 @@ def chat_with_ai(user_id: str, message: str, resume_context: str = None):
         messages = [
             {
                 "role": "system",
-                "content": "You are an AI career assistant helping with resume, skills, interview preparation, and career guidance."
+                "content": """You are an AI career assistant.
+                    Rules:
+                    - Give short and direct answers
+                    - Maximum 3 sentences
+                    - Avoid long explanations
+                    - Be clear and professional
+                """
             }
         ]
 
@@ -32,7 +38,7 @@ def chat_with_ai(user_id: str, message: str, resume_context: str = None):
         # 3. Load previous chats from MongoDB
         previous_chats = chat_collection.find(
             {"user_id": user_id}
-        ).sort("_id", 1)
+        ).sort("_id", 1).limit(5)
 
         for chat in previous_chats:
 
@@ -64,7 +70,8 @@ def chat_with_ai(user_id: str, message: str, resume_context: str = None):
         response = client.chat.completions.create(
             model="llama3-8b-8192",
             messages=messages,
-            temperature=0.7 
+            temperature=0.4,
+            max_tokens=100
         )
 
         reply = response.choices[0].message.content

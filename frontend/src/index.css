@@ -1,8 +1,15 @@
-@import "tailwindcss";
+/* @import "tailwindcss";
 
 body {
    background-color: #0f1539;
    background-color: #111a3f;  
    color: white;
+  font-family: Inter, system-ui, sans-serif;
+} */
+@import "tailwindcss";
+
+body {
+  background-color: #f9fafb;
+  color: #111827;
   font-family: Inter, system-ui, sans-serif;
 }

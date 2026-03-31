@@ -1,9 +1,21 @@
-@import "tailwindcss";
+ /* @import "tailwindcss";
 
 body {
    background-color: #020617;
-  /* background-color: #020617;  */
-  color: white;
+   background-color: #020617;  
+   color: white;
+  
+   background-color: #f9fafb; 
+  color: #111827; 
   font-family: Inter, system-ui, sans-serif;
 }
- 
+*/
+
+@import "tailwindcss";
+
+body {
+  background-color: #f9fafb;
+  color: #111827;
+  font-family: Inter, system-ui, sans-serif;
+  overflow-x: hidden;
+}
