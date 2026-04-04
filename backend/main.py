@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 import PyPDF2
 
 from backend.resume_ai import analyze_resume_with_ai
-from chatbot import chat_with_ai
+from backend.chatbot import chat_with_ai
 from pydantic import BaseModel
 
 app = FastAPI()
