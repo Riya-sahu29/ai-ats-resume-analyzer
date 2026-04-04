@@ -8,7 +8,7 @@ export default function ResumeForm({ setResult }) {
 
   const handleSubmit = async () => {
     if (!file || !jobDesc) {
-      alert("Upload resume & enter job description");
+      alert("Please upload a resume and enter a job description.");
       return;
     }
 
@@ -20,17 +20,29 @@ export default function ResumeForm({ setResult }) {
       setLoading(true);
 
       const res = await axios.post(
-        "http://127.0.0.1:8000/analyze-resume/",
-        formData
+        "https://ai-ats-resume-analyzer-backend.onrender.com/analyze-resume/",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
       );
 
       console.log("BACKEND RESPONSE:", res.data);
 
+      // if backend returns {analysis: ...}
       setResult(res.data.analysis ?? res.data);
 
     } catch (err) {
       console.error("Error:", err);
-      alert("Backend error — check terminal");
+
+      if (err.response) {
+        alert("Server Error: " + err.response.data);
+      } else {
+        alert("Network error. Please try again.");
+      }
+
     } finally {
       setLoading(false);
     }
@@ -39,8 +51,8 @@ export default function ResumeForm({ setResult }) {
   return (
     <div className="space-y-4 bg-white p-6 rounded-xl shadow border border-blue-100 transition duration-300 hover:shadow-xl hover:-translate-y-0.5">
 
-      <input 
-        type="file" 
+      <input
+        type="file"
         accept="application/pdf"
         onChange={(e) => setFile(e.target.files[0])}
         className="w-full p-3 border border-blue-200 rounded text-gray-900 text-sm md:text-base"
@@ -54,12 +66,12 @@ export default function ResumeForm({ setResult }) {
         className="w-full p-3 border border-blue-200 rounded text-gray-900 text-sm md:text-base"
       />
 
-      <button 
+      <button
         onClick={handleSubmit}
         disabled={loading}
         className="w-full py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg font-semibold text-sm md:text-base"
       >
-        {loading ? "Analyzing..." : "Analyze Resume"}
+        {loading ? "Analyzing Resume..." : "Analyze Resume"}
       </button>
 
     </div>
