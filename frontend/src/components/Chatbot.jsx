@@ -14,7 +14,7 @@ export default function Chatbot() {
 
     setMessage("");
 
-    const res = await fetch(`${import.meta.env.VITE_API_URL}/chat`, {
+    const res = await fetch("https://ai-ats-resume-analyzer-backend.onrender.com/chat", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
