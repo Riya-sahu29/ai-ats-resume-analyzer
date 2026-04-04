@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
-
+ 
 export default function ResumeForm({ setResult }) {
   const [file, setFile] = useState(null);
   const [jobDesc, setJobDesc] = useState("");
