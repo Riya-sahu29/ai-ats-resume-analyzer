@@ -1,6 +1,6 @@
 import os
 from groq import Groq
-from database import chat_collection
+from backend.database import chat_collection
 
 # Create Groq client
 client = Groq(
