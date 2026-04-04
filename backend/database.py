@@ -1,13 +1,10 @@
 from pymongo import MongoClient
 
 try:
-    # Connect to MongoDB
-    client = MongoClient("mongodb://localhost:27017")
+    client = MongoClient("mongodb+srv://riya:riya12345@cluster0.d1tgism.mongodb.net/ai_resume_analyzer")
 
-    # Create / use database
     db = client["ai_resume_analyzer"]
 
-    # Collections
     chat_collection = db["chat_history"]
     resume_collection = db["resume_data"]
 
