@@ -1,10 +1,10 @@
 import os
 from groq import Groq
-from backend.database import chat_collection
+from database import chat_collection
 
 # Create Groq client
 client = Groq(
-    api_key="groq_api_key"
+    api_key=os.getenv("GROQ_API_KEY")
 )
 
 
