@@ -68,7 +68,7 @@ def chat_with_ai(user_id: str, message: str, resume_context: str = None):
 
         # 5. Call Groq AI
         response = client.chat.completions.create(
-            model="llama3-8b-8192",
+            model="llama-3.1-8b-instant",
             messages=messages,
             temperature=0.4,
             max_tokens=100
