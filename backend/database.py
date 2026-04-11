@@ -1,7 +1,13 @@
 from pymongo import MongoClient
+import os
+
+MONGO_URI = os.getenv("MONGO_URI")
 
 try:
-    client = MongoClient("mongodb+srv://riya:riya12345@cluster0.d1tgism.mongodb.net/ai_resume_analyzer")
+    client = MongoClient(MONGO_URI, serverSelectionTimeoutMS=5000)
+
+    # Force connection check
+    client.server_info()
 
     db = client["ai_resume_analyzer"]
 
