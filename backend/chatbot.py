@@ -1,6 +1,6 @@
 import os
 from groq import Groq
-from backend.database import chat_collection
+from database import chat_collection
 
 # Create Groq client
 client = Groq(
@@ -18,11 +18,13 @@ def chat_with_ai(user_id: str, message: str, resume_context: str = None):
                 "role": "system",
                 "content": """You are an AI career assistant.
                     Rules:
-                    - Give short and direct answers
-                    - Maximum 3 sentences
-                    - Avoid long explanations
+                    - Always respond in bullet points
+                    - Each point must be on a new line
+                    - Do NOT use \\n in the response
+                    - Do NOT write paragraphs
+                    - Keep each point short (1 line)
                     - Be clear and professional
-                """
+                    """
             }
         ]
 
@@ -71,24 +73,26 @@ def chat_with_ai(user_id: str, message: str, resume_context: str = None):
             model="llama-3.1-8b-instant",
             messages=messages,
             temperature=0.4,
-            max_tokens=100
+            max_tokens=300
         )
 
         reply = response.choices[0].message.content
+        # clean and convert to bullet list 
+        reply_lines = [line.strip() for line in reply.split('\n') if line.strip()]
 
         # 6. Save chat in MongoDB
         chat_collection.insert_one(
             {
                 "user_id": user_id,
                 "message": message,
-                "reply": reply
+                "reply": reply_lines
             }
         )
 
-        return reply 
+        return reply_lines 
 
     except Exception as e:
 
         print("ERROR in chat_with_ai:", str(e))
 
-        return "Error: AI response failed"  
+        return f"Error:{str(e)}"  
