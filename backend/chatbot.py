@@ -33,7 +33,7 @@ def chat_with_ai(user_id: str, message: str, resume_context: str = None):
             messages.append(
                 {
                     "role": "system",
-                    "content": f"User Resume Context: {resume_context}"
+                    "content": resume_context
                 }
             )
 
