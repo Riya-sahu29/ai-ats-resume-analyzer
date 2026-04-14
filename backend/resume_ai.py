@@ -19,12 +19,21 @@ def analyze_resume_with_ai(resume_text, job_text):
     prompt = f"""
 You are a professional ATS (Applicant Tracking System).
 
-Compare the RESUME with the JOB DESCRIPTION and return ONLY valid JSON in this format:
+Rules:
+- ats_score must be in percentage (0 to 100)
+- Do Not return decimals like 0.8
+- Calculate ATS score based on:
+  1. Skill match percentage
+  2. keyword relevance
+  3. Experience alignment
+- Be strict and realistic (do NOT give high score easily)
+
+Return ONLY valid JSON in this format:
 
 {{
    "ats_score": number,
    "strengths": [list],
-   "weakness": [list],
+   "weaknesses": [list],
    "missing_skills": [list],
    "improvement_tips": [list],
    "verdict": "Hire | Maybe | Reject"
@@ -58,6 +67,11 @@ JOB DESCRIPTION:
             return {"error": "AI returned no valid JSON", "raw": raw_output}
 
         parsed = json.loads(match.group())
+
+        #fix ATS score format
+        ats_score = parsed.get("ats_score")
+        if isinstance(ats_score, float) and ats_score <= 1:
+            parsed["ats_score"] = int(ats_score * 100)
 
         return parsed
 
