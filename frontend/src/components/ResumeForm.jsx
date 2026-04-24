@@ -1,14 +1,20 @@
+import React, { useState } from "react";
 import axios from "axios";
-import { useState } from "react";
- 
-export default function ResumeForm({ setResult }) {
+
+const ResumeForm = () => {
   const [file, setFile] = useState(null);
   const [jobDesc, setJobDesc] = useState("");
+  const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async () => {
+  const [userMessage, setUserMessage] = useState("");
+  const [chatReply, setChatReply] = useState("");
+  const [resumeText, setResumeText] = useState("");
+
+  // ================= RESUME ANALYSIS =================
+  const handleAnalyze = async () => {
     if (!file || !jobDesc) {
-      alert("Please upload a resume and enter a job description.");
+      alert("Please upload resume and enter job description");
       return;
     }
 
@@ -20,60 +26,129 @@ export default function ResumeForm({ setResult }) {
       setLoading(true);
 
       const res = await axios.post(
-        "https://ai-ats-resume-analyzer-backend.onrender.com/analyze-resume/",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
+        "https://ai-ats-resume-analyzer-backend.onrender.com/analyze-resume",
+        formData
       );
 
-      console.log("BACKEND RESPONSE:", res.data);
-
-      // if backend returns {analysis: ...}
-      setResult(res.data.analysis ?? res.data);
+      console.log("ANALYZE RESPONSE:", res.data);
+      setResult(res.data);
 
     } catch (err) {
-      console.error("Error:", err);
-
-      if (err.response) {
-        alert("Server Error: " + err.response.data);
-      } else {
-        alert("Network error. Please try again.");
-      }
-
+      console.error("ANALYZE ERROR:", err.response?.data || err.message);
+      alert("Error analyzing resume");
     } finally {
       setLoading(false);
     }
   };
 
-  return (
-    <div className="space-y-4 bg-white p-6 rounded-xl shadow border border-blue-100 transition duration-300 hover:shadow-xl hover:-translate-y-0.5">
+  // ================= CHAT =================
+  const handleChat = async () => {
+    if (!userMessage) return;
 
+    try {
+      const res = await axios.post(
+        "https://ai-ats-resume-analyzer-backend.onrender.com/chat",
+        {
+          user_id: "riya123",
+          message: userMessage,
+          resume_context: resumeText || "No resume context"
+        }
+      );
+
+      console.log("CHAT RESPONSE:", res.data);
+      setChatReply(res.data.reply);
+
+    } catch (err) {
+      console.error("CHAT ERROR:", err.response?.data || err.message);
+      alert("Chat error");
+    }
+  };
+
+  return (
+    <div style={{ padding: "20px" }}>
+      <h2>AI ATS Resume Analyzer</h2>
+
+      {/* Upload Resume */}
       <input
         type="file"
-        accept="application/pdf"
+        accept=".pdf"
         onChange={(e) => setFile(e.target.files[0])}
-        className="w-full p-3 border border-blue-200 rounded text-gray-900 text-sm md:text-base"
       />
 
+      {/* Job Description */}
       <textarea
-        placeholder="Paste Job Description..."
+        placeholder="Enter job description"
         value={jobDesc}
         onChange={(e) => setJobDesc(e.target.value)}
-        rows={5}
-        className="w-full p-3 border border-blue-200 rounded text-gray-900 text-sm md:text-base"
+        rows="4"
+        style={{ width: "100%", marginTop: "10px" }}
       />
 
-      <button
-        onClick={handleSubmit}
-        disabled={loading}
-        className="w-full py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg font-semibold text-sm md:text-base"
-      >
-        {loading ? "Analyzing Resume..." : "Analyze Resume"}
+      {/* Analyze Button */}
+      <button onClick={handleAnalyze} disabled={loading}>
+        {loading ? "Analyzing..." : "Analyze Resume"}
       </button>
 
+      {/* Result */}
+      {result && (
+        <div style={{ marginTop: "20px" }}>
+          <h3>ATS Score: {result.ats_score}</h3>
+
+          <h4>Strengths:</h4>
+          <ul>
+            {result.strengths?.map((item, i) => (
+              <li key={i}>{item}</li>
+            ))}
+          </ul>
+
+          <h4>Weaknesses:</h4>
+          <ul>
+            {result.weaknesses?.map((item, i) => (
+              <li key={i}>{item}</li>
+            ))}
+          </ul>
+
+          <h4>Missing Skills:</h4>
+          <ul>
+            {result.missing_skills?.map((item, i) => (
+              <li key={i}>{item}</li>
+            ))}
+          </ul>
+
+          <h4>Improvement Tips:</h4>
+          <ul>
+            {result.improvement_tips?.map((item, i) => (
+              <li key={i}>{item}</li>
+            ))}
+          </ul>
+
+          <h4>Verdict: {result.verdict}</h4>
+        </div>
+      )}
+
+      <hr />
+
+      {/* ================= CHAT UI ================= */}
+      <h2>Chat with AI</h2>
+
+      <input
+        type="text"
+        placeholder="Ask something..."
+        value={userMessage}
+        onChange={(e) => setUserMessage(e.target.value)}
+        style={{ width: "100%", marginBottom: "10px" }}
+      />
+
+      <button onClick={handleChat}>Send</button>
+
+      {chatReply && (
+        <div style={{ marginTop: "20px" }}>
+          <strong>AI Reply:</strong>
+          <p>{chatReply}</p>
+        </div>
+      )}
     </div>
   );
-}
+};
+
+export default ResumeForm;
