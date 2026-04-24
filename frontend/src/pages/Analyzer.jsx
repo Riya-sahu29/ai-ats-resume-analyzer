@@ -27,12 +27,7 @@ export default function Analyzer() {
           </p>
         )}
 
-        {/* Add chatbot here */}
-        <div className="mt-10">
-          <Chatbot />
-        </div>  
-
-      </div>
+     </div>
     </div>
   );
 }
