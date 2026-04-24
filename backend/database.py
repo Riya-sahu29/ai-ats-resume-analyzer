@@ -3,18 +3,17 @@ import os
 
 MONGO_URL = os.getenv("MONGO_URL")
 
-try:
-    client = MongoClient(MONGO_URL, serverSelectionTimeoutMS=5000)
+if not MONGO_URL:
+    raise Exception("MONGO_URL is not set")
 
-    # Force connection check
-    client.server_info()
+client = MongoClient(MONGO_URL, serverSelectionTimeoutMS=5000)
 
-    db = client["ai_resume_analyzer"]
+# Force connection
+client.server_info()
 
-    chat_collection = db["chat_history"]
-    resume_collection = db["resume_data"]
+db = client["ai_resume_analyzer"]
 
-    print("MongoDB Connected Successfully")
+chat_collection = db["chat_history"]
+resume_collection = db["resume_data"]
 
-except Exception as e:
-    print("MongoDB Connection Error:", e)
+print("MongoDB Connected Successfully")
