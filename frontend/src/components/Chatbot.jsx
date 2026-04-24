@@ -14,7 +14,7 @@ export default function Chatbot() {
 
     setMessage("");
 
-    const res = await fetch("https://ai-ats-resume-analyzer-backend.onrender.com/chat", {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/chat`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -22,6 +22,7 @@ export default function Chatbot() {
       body: JSON.stringify({
         user_id: "riya",
         message: message,
+        resume_context: ""
       }),
     });
 
@@ -76,3 +77,4 @@ export default function Chatbot() {
     </div>
   );
 }
+
