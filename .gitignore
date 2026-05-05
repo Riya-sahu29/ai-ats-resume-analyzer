@@ -1,18 +1,32 @@
-# environment variables
+# Environment variables
 .env
 
-# python
+# Python
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
 
-# node
+# Virtual environment
+.venv/
+
+# Node
 node_modules/
 
-# build
+# Build files
 dist/
 build/
 
-# vscode
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# VS Code
 .vscode/
 
-.venv/
+# Optional: coverage/test
+.coverage
+htmlcov/
