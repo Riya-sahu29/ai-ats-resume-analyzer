@@ -10,7 +10,7 @@ from slowapi import Limiter, _rate_limit_exceeded_handler
 from slowapi.util import get_remote_address
 from slowapi.errors import RateLimitExceeded
 
-from backend.resume_ai import analyze_resume_with_ai
+from resume_ai import analyze_resume_with_ai
 from chatbot import chat_with_ai
 from utils import extract_text_from_pdf
 from cache import make_cache_key, get_cached_result, set_cached_result
