@@ -1,10 +1,13 @@
 import logging
 import asyncio
 import uuid
+import os
 
-from fastapi import FastAPI, UploadFile, File, Form, Request
+from fastapi import FastAPI, UploadFile, File, Form, Request, BackgroundTasks
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.openapi.docs import get_swagger_ui_html, get_swagger_ui_oauth2_redirect_html
 from pydantic import BaseModel
 from slowapi import Limiter, _rate_limit_exceeded_handler
 from slowapi.util import get_remote_address
@@ -15,6 +18,7 @@ from chatbot import chat_with_ai
 from utils import extract_text_from_pdf
 from cache import make_cache_key, get_cached_result, set_cached_result
 from database import save_resume_data
+from config import settings
 
 # ── Logging setup ──────────────────────────────────────────────────────────────
 logging.basicConfig(
@@ -27,9 +31,38 @@ logger = logging.getLogger(__name__)
 limiter = Limiter(key_func=get_remote_address)
 
 # ── App ────────────────────────────────────────────────────────────────────────
-app = FastAPI()
+# docs_url=None → we serve /docs ourselves from local static files (fixes white screen)
+app = FastAPI(title="AI ATS Resume Analyzer", docs_url=None, redoc_url=None)
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
+
+# ── Swagger UI served from local static files (CDN blocked on mobile/some networks) ──
+# Run setup_swagger.sh once locally, then git add static/ and push to Render
+_static_dir = os.path.join(os.path.dirname(__file__), "static")
+if os.path.isdir(_static_dir):
+    app.mount("/static", StaticFiles(directory=_static_dir), name="static")
+
+    @app.get("/docs", include_in_schema=False)
+    async def swagger_ui():
+        return get_swagger_ui_html(
+            openapi_url="/openapi.json",
+            title="ATS Resume Analyzer — Docs",
+            swagger_js_url="/static/swagger-ui-bundle.js",
+            swagger_css_url="/static/swagger-ui.css",
+        )
+
+    @app.get("/docs/oauth2-redirect", include_in_schema=False)
+    async def swagger_redirect():
+        return get_swagger_ui_oauth2_redirect_html()
+else:
+    logger.warning("⚠️ static/ folder missing — /docs will use CDN (may fail on mobile)")
+
+# ── CORS ───────────────────────────────────────────────────────────────────────
+# BUG FIX: allow_credentials=True + allow_origins=["*"] is ILLEGAL in browsers.
+# Browsers block every request with this combination (CORS error on all devices).
+# Fix: use specific origin when credentials needed, or drop credentials for wildcard.
+_allow_origins = settings.ALLOWED_ORIGINS  # set ALLOWED_ORIGINS env var on Render
+_use_credentials = "*" not in _allow_origins
 
 app.add_middleware(
     CORSMiddleware,
@@ -38,6 +71,8 @@ app.add_middleware(
         "https://ai-ats-resume-analyzer-xi.vercel.app",
     ],
     allow_credentials=True,
+    allow_origins=_allow_origins,
+    allow_credentials=_use_credentials,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -57,10 +92,21 @@ async def home():
     return {"status": "AI ATS Resume Analyzer Running"}
 
 
+@app.get("/health")
+async def health():
+    return {
+        "status": "ok",
+        "groq_configured": bool(settings.GROQ_API_KEY),
+        "redis_configured": bool(settings.REDIS_URL),
+        "db_configured": bool(settings.MONGODB_URL),
+    }
+
+
 @app.post("/analyze-resume/")
 @limiter.limit("10/minute")
 async def analyze_resume(
     request: Request,
+    background_tasks: BackgroundTasks,
     file: UploadFile = File(...),
     job_description: str = Form(...),
 ):
@@ -79,7 +125,6 @@ async def analyze_resume(
         return JSONResponse(status_code=400, content={"error": "Job description is too short"})
 
     # ── Extract PDF text (non-blocking — runs in thread pool) ─────────────────
-    # FIX: PyPDF2 was blocking your async event loop — this moves it to a thread
     try:
         resume_text = await extract_text_from_pdf(content)
     except ValueError as e:
@@ -109,9 +154,11 @@ async def analyze_resume(
     result["session_id"] = session_id
     result["from_cache"] = False
 
-    # ── Save to cache + DB in background (does not block response) ─────────────
-    asyncio.create_task(set_cached_result(cache_key, result))
-    asyncio.create_task(save_resume_data(resume_text, result, session_id))
+    # ── BUG FIX: BackgroundTasks is safer than asyncio.create_task() ──────────
+    # asyncio.create_task() can fail silently in certain ASGI/Uvicorn contexts.
+    # FastAPI's BackgroundTasks is the correct, tested way to do this.
+    background_tasks.add_task(set_cached_result, cache_key, result)
+    background_tasks.add_task(save_resume_data, resume_text, result, session_id)
 
     return JSONResponse(result)
 

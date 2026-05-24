@@ -3,16 +3,26 @@ import logging
 import os
 from dotenv import load_dotenv
 from database import get_chat_history, save_chat_message
+from config import settings
 
 load_dotenv()
 
 logger = logging.getLogger(__name__)
 
-GROQ_API_KEY = os.getenv("GROQ_API_KEY", "")
-GROQ_MODEL   = "llama-3.1-8b-instant"
+# BUG FIX: Use settings from config so model name is consistent everywhere.
+# Original had "llama-3.1-8b-instant" here but config.py had "llama3-8b-8192" — mismatch.
+GROQ_API_KEY = settings.GROQ_API_KEY
+GROQ_MODEL   = settings.GROQ_MODEL
+
+if not GROQ_API_KEY:
+    logger.error("❌ GROQ_API_KEY not set — chat will return error messages to users")
 
 
 async def chat_with_ai(user_id: str, user_message: str, resume_context: str = "") -> str:
+
+    # BUG FIX: Guard against missing API key — gives a clear message instead of cryptic 401
+    if not GROQ_API_KEY:
+        return "Chat is unavailable: API key not configured. Please contact support."
 
     # Load past messages from MongoDB
     history = await get_chat_history(user_id, limit=6)

@@ -12,8 +12,8 @@ logger = logging.getLogger(__name__)
 
 GROQ_API_KEY = os.getenv("GROQ_API_KEY", "")
 GROQ_MODEL   = "llama-3.1-8b-instant"   # your original model — kept the same
-GROQ_TIMEOUT = 45                        # seconds before giving up
-MAX_RETRIES  = 3                         # retry this many times on failure
+GROQ_TIMEOUT = 20                        # seconds before giving up
+MAX_RETRIES  = 2                         # retry this many times on failure
 
 # ── Prompt — kept your exact JSON structure ────────────────────────────────────
 PROMPT_TEMPLATE = """
@@ -51,13 +51,13 @@ JOB DESCRIPTION:
 async def analyze_resume_with_ai(resume_text: str, job_text: str) -> dict:
     """
     FIX 1: Now fully async — does not block FastAPI event loop.
-    FIX 2: Has a 45s timeout — will not hang forever on mobile.
-    FIX 3: Retries 3 times before giving up.
+    FIX 2: Has a 20s timeout — will not hang forever on mobile.
+    FIX 3: Retries 2 times before giving up.
     FIX 4: Always returns valid dict — never returns None or crashes silently.
     """
     prompt = PROMPT_TEMPLATE.format(
-        resume_text=resume_text[:4000],   # cap to avoid token overflow
-        job_text=job_text[:2000],
+        resume_text=resume_text[:2000],   # cap to avoid token overflow
+        job_text=job_text[:1000],
     )
 
     last_error = "Unknown error"
