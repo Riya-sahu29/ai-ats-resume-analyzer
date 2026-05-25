@@ -37,25 +37,18 @@ app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 # ── CORS ───────────────────────────────────────────────────────────────────────
-# BUG FIX: allow_credentials=True + allow_origins=["*"] is ILLEGAL in browsers.
-# Browsers block every request with this combination (CORS error on all devices).
-# Fix: use specific origin when credentials needed, or drop credentials for wildcard.
-_allow_origins = settings.ALLOWED_ORIGINS  # set ALLOWED_ORIGINS env var on Render
-_use_credentials = "*" not in _allow_origins
+_allow_origins = [
+    "http://localhost:5173",
+    "https://ai-ats-resume-analyzer-xi.vercel.app",
+]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:5173",
-        "https://ai-ats-resume-analyzer-xi.vercel.app",
-    ],
-    allow_credentials=True,
     allow_origins=_allow_origins,
-    allow_credentials=_use_credentials,
+    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
 
 # ── Schema — kept same as your original ───────────────────────────────────────
 class ChatRequest(BaseModel):

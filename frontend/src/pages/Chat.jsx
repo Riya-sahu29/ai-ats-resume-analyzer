@@ -18,7 +18,7 @@ export default function Chat() {
       </div>
 
       {/* Chat box — full width on mobile, centered on tablet/laptop */}
-      <div className="w-full max-w-sm sm:max-w-2xl md:max-w-3xl lg:max-w-4xl mx-auto">
+      <div className="w-full max-w-sm sm:max-w-xl md:max-w-2xl mx-auto">
         <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
 
           {/* Tip banner */}
@@ -33,7 +33,7 @@ export default function Chat() {
           </div>
 
           {/* Chatbot — taller on tablet and laptop */}
-          <div className="p-3 sm:p-5 md:p-6">
+          <div className="p-2 sm:p-4 ">
             <Chatbot userId={userId} resumeSummary="" />
           </div>
 
