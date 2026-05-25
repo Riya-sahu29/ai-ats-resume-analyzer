@@ -12,8 +12,8 @@ class Settings:
     REDIS_URL: str     = os.getenv("REDIS_URL", "")
     DB_NAME: str       = "ats_analyzer"
     GROQ_MODEL: str    = "llama-3.1-8b-instant"
-    GROQ_TIMEOUT: int  = 20
-    GROQ_MAX_RETRIES: int = 2
+    GROQ_TIMEOUT: int  = 45
+    GROQ_MAX_RETRIES: int = 3
     CACHE_TTL: int     = 3600 * 24
     MAX_FILE_SIZE_MB: int = 5
 
