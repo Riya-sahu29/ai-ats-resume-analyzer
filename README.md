@@ -47,31 +47,31 @@ The chatbot uses stored resume context and memory to provide personalized respon
 
 ## 🏠 Home Page
 
-<img src="images/home.png" width="900"/>
+<img src="images/home.png.png" width="900"/>
 
 ---
 
 ## 📄 Resume Analyzer Page
 
-<img src="images/analyzer.png" width="900"/>
+<img src="images/Analyze.png.png" width="900"/>
 
 ---
 
 ## 📊 ATS Analysis Result
 
-<img src="images/Result.png" width="900"/>
+<img src="images/Result.png.png" width="900"/>
 
 ---
 
 ## 🤖 AI Chatbot Interface
 
-<img src="images/Chatbot.png" width="900"/>
+<img src="images/Chatbot.png.png" width="900"/>
 
 ---
 
 ## 💬 AI Chatbot Conversation
 
-<img src="images/Chatbot2.png" width="900"/>
+<img src="images/Chatbot2.png.png" width="900"/>
 
 ---
 
@@ -117,10 +117,13 @@ The chatbot uses stored resume context and memory to provide personalized respon
 ai-ats-resume-analyzer/
 │
 ├── backend/
-│   ├── main.py
+│   ├── cache.py
 │   ├── chatbot.py
+│   ├── config.py
 │   ├── database.py
+│   ├── main.py
 │   ├── resume_ai.py
+│   ├── utils.py
 │   └── .env
 │
 ├── frontend/
@@ -138,6 +141,9 @@ ai-ats-resume-analyzer/
 │   ├── Chatbot.png
 │   └── Chatbot2.png
 │
+├── requirements.txt
+├── runtime.txt
+├── .gitignore
 └── README.md
 ```
 
