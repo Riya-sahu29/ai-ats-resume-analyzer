@@ -32,30 +32,9 @@ limiter = Limiter(key_func=get_remote_address)
 
 # ── App ────────────────────────────────────────────────────────────────────────
 # docs_url=None → we serve /docs ourselves from local static files (fixes white screen)
-app = FastAPI(title="AI ATS Resume Analyzer", docs_url=None, redoc_url=None)
+app = FastAPI(title="AI ATS Resume Analyzer")
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
-
-# ── Swagger UI served from local static files (CDN blocked on mobile/some networks) ──
-# Run setup_swagger.sh once locally, then git add static/ and push to Render
-_static_dir = os.path.join(os.path.dirname(__file__), "static")
-if os.path.isdir(_static_dir):
-    app.mount("/static", StaticFiles(directory=_static_dir), name="static")
-
-    @app.get("/docs", include_in_schema=False)
-    async def swagger_ui():
-        return get_swagger_ui_html(
-            openapi_url="/openapi.json",
-            title="ATS Resume Analyzer — Docs",
-            swagger_js_url="/static/swagger-ui-bundle.js",
-            swagger_css_url="/static/swagger-ui.css",
-        )
-
-    @app.get("/docs/oauth2-redirect", include_in_schema=False)
-    async def swagger_redirect():
-        return get_swagger_ui_oauth2_redirect_html()
-else:
-    logger.warning("⚠️ static/ folder missing — /docs will use CDN (may fail on mobile)")
 
 # ── CORS ───────────────────────────────────────────────────────────────────────
 # BUG FIX: allow_credentials=True + allow_origins=["*"] is ILLEGAL in browsers.
