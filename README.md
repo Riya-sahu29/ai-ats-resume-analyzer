@@ -1,30 +1,89 @@
 # 🤖 AI Resume Analyzer with AI Chatbot Memory
 
+![Python](https://img.shields.io/badge/Python-3.10-blue)
+![FastAPI](https://img.shields.io/badge/FastAPI-Backend-green)
+![React](https://img.shields.io/badge/React-Frontend-blue)
+![MongoDB](https://img.shields.io/badge/MongoDB-Database-green)
+![Groq AI](https://img.shields.io/badge/Groq-AI-orange)
+![License](https://img.shields.io/badge/License-MIT-yellow)
+
 An intelligent full-stack web application that analyzes resumes using AI and provides personalized career guidance through a chatbot with memory.
 
 Built using FastAPI, React, MongoDB, and Groq AI.
 
 ---
+# 🌟 Why This Project?
+
+Many candidates get rejected by Applicant Tracking Systems (ATS) before recruiters even review their resumes.
+
+This AI-powered platform helps users:
+
+- Improve ATS scores
+- Optimize resumes
+- Receive AI-generated feedback
+- Get personalized career guidance
+- Understand skill gaps for job roles
+
+The chatbot uses stored resume context and memory to provide personalized responses and career suggestions.
+
+---
 
 # 🚀 Features
 
-✅ AI-powered ATS Resume Analysis
-✅ AI Chatbot with Memory (MongoDB)
-✅ Resume-based Career Guidance
-✅ FastAPI REST Backend
-✅ Modern React + Tailwind Frontend
-✅ MongoDB Database Integration
-✅ Real-world production-level project
+✅ AI-powered ATS Resume Analysis  
+✅ AI Chatbot with Memory (MongoDB)  
+✅ Resume-based Career Guidance  
+✅ FastAPI REST Backend  
+✅ Modern React + Tailwind Frontend  
+✅ MongoDB Database Integration  
+✅ Real-world Production-level Architecture  
+✅ Resume Context-aware Chatbot  
+✅ Job Description Matching  
+✅ AI-generated Resume Suggestions  
+
+---
+
+# 📸 Project Screenshots
+
+## 🏠 Home Page
+
+<img src="images/home.png" width="900"/>
+
+---
+
+## 📄 Resume Analyzer Page
+
+<img src="images/analyzer.png" width="900"/>
+
+---
+
+## 📊 ATS Analysis Result
+
+<img src="images/Result.png" width="900"/>
+
+---
+
+## 🤖 AI Chatbot Interface
+
+<img src="images/Chatbot.png" width="900"/>
+
+---
+
+## 💬 AI Chatbot Conversation
+
+<img src="images/Chatbot2.png" width="900"/>
 
 ---
 
 # 🧠 How it Works
 
-1. User uploads resume and job description
-2. AI analyzes resume and gives ATS score
-3. Resume data is stored in MongoDB
-4. Chatbot uses stored resume context
-5. Chatbot provides personalized career advice
+1. User uploads resume and job description  
+2. PDF resume text gets extracted  
+3. AI analyzes resume content  
+4. ATS score is generated  
+5. Resume data is stored in MongoDB  
+6. Chatbot uses stored resume memory  
+7. AI provides personalized career guidance  
 
 ---
 
@@ -32,29 +91,29 @@ Built using FastAPI, React, MongoDB, and Groq AI.
 
 ## Frontend
 
-* React.js
-* Tailwind CSS
-* Axios
+- React.js
+- Tailwind CSS
+- Axios
 
 ## Backend
 
-* FastAPI
-* Python
-* REST API
+- FastAPI
+- Python
+- REST API
 
 ## Database
 
-* MongoDB
+- MongoDB
 
 ## AI
 
-* Groq API (LLM)
+- Groq API (LLM)
 
 ---
 
 # 📂 Project Structure
 
-```
+```bash
 ai-ats-resume-analyzer/
 │
 ├── backend/
@@ -72,6 +131,13 @@ ai-ats-resume-analyzer/
 │   │
 │   └── package.json
 │
+├── images/
+│   ├── home.png
+│   ├── analyzer.png
+│   ├── Result.png
+│   ├── Chatbot.png
+│   └── Chatbot2.png
+│
 └── README.md
 ```
 
@@ -79,58 +145,61 @@ ai-ats-resume-analyzer/
 
 # ⚙️ Installation
 
-## 1. Clone repository
+## 1️⃣ Clone Repository
 
-```
+```bash
 git clone https://github.com/Riya-sahu29/ai-ats-resume-analyzer.git
+
 cd ai-ats-resume-analyzer
 ```
 
 ---
 
-## 2. Backend Setup
+# 🔧 Backend Setup
 
-```
+```bash
 cd backend
 
 python -m venv .venv
+
 .venv\Scripts\activate
 
 pip install -r requirements.txt
 ```
 
-Create `.env`
+## Create `.env`
 
-```
+```env
 GROQ_API_KEY=your_api_key
 ```
 
-Run backend:
+## Run Backend
 
-```
+```bash
 uvicorn main:app --reload
 ```
 
 Backend runs on:
 
-```
+```bash
 http://127.0.0.1:8000
 ```
 
 ---
 
-## 3. Frontend Setup
+# 💻 Frontend Setup
 
-```
+```bash
 cd frontend
 
 npm install
+
 npm run dev
 ```
 
 Frontend runs on:
 
-```
+```bash
 http://localhost:5173
 ```
 
@@ -140,13 +209,13 @@ http://localhost:5173
 
 ## Analyze Resume
 
-```
+```http
 POST /analyze-resume
 ```
 
 ## Chatbot
 
-```
+```http
 POST /chat
 ```
 
@@ -156,24 +225,22 @@ POST /chat
 
 MongoDB automatically creates:
 
-```
-chat_history
-resume_data
-```
+- `chat_history`
+- `resume_data`
 
 ---
 
 # 💬 Example Chat
 
-User:
+### User
 
-```
+```bash
 Suggest backend skills based on my resume
 ```
 
-AI:
+### AI
 
-```
+```bash
 You should focus on FastAPI, MongoDB, REST API, Docker, and cloud deployment.
 ```
 
@@ -181,39 +248,52 @@ You should focus on FastAPI, MongoDB, REST API, Docker, and cloud deployment.
 
 # 🎯 Use Cases
 
-* Students preparing for placements
-* Resume improvement
-* Career guidance
-* Interview preparation
+- Students preparing for placements
+- Resume optimization
+- Career guidance
+- Interview preparation
+- ATS score improvement
+- Skill gap analysis
 
 ---
 
 # 🔮 Future Improvements
 
-* User authentication
-* Resume history dashboard
-* Cloud deployment (AWS)
-* Vector database memory
-* Multi-resume support
+- User Authentication
+- Resume History Dashboard
+- Cloud Deployment (AWS)
+- Docker Support
+- Vector Database Memory
+- Multi-resume Support
+- AI Interview Preparation
+- Resume Rewriting Suggestions
+
+---
+
+# 🎥 Demo Video
+
+[Watch Demo Video](ADD_YOUR_VIDEO_LINK_HERE)
 
 ---
 
 # 👩‍💻 Author
 
-Riya Priyadarsani Sahu
+## Riya Priyadarsani Sahu
 
-GitHub:
+GitHub:  
 https://github.com/Riya-sahu29
 
 ---
 
 # ⭐ Resume-Level Project Highlights
 
-✔ Full-Stack Application
-✔ AI Integration
-✔ Database Memory
-✔ REST API Development
-✔ Production Architecture
+✔ Full-Stack Application  
+✔ AI Integration  
+✔ Database Memory  
+✔ REST API Development  
+✔ Production Architecture  
+✔ AI Chatbot Context Memory  
+✔ Modern Frontend + Backend Integration  
 
 ---
 
