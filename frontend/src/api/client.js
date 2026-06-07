@@ -11,12 +11,9 @@ export async function analyzeResume(resumeFile, jobDescription, onRetry) {
   const formData = new FormData();
   formData.append("file", resumeFile);
   formData.append("job_description", jobDescription);
-  alert(
-  "File: " +
-  formData.get("file")?.name +
-  "\nJD: " +
-  formData.get("job_description")
-);
+  for (const pair of formData.entries()) {
+  alert(`${pair[0]}: ${pair[1]}`);
+}
 
   const MAX_RETRIES = 2;
   let lastError;
@@ -27,6 +24,7 @@ export async function analyzeResume(resumeFile, jobDescription, onRetry) {
 
       const response = await apiClient.post(
         "/analyze-resume/", 
+        formData,
       );
       return response.data;
 
