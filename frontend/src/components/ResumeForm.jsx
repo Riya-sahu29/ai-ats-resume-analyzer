@@ -70,7 +70,7 @@ export default function ResumeForm({ setResult }) {
         <input
           ref={inputRef}
           type="file"
-          accept=".pdf"
+          accept="application/pdf"
           className="hidden"
           onChange={handleFileChange}
           disabled={isLoading}
