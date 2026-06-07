@@ -11,6 +11,12 @@ export async function analyzeResume(resumeFile, jobDescription, onRetry) {
   const formData = new FormData();
   formData.append("file", resumeFile);
   formData.append("job_description", jobDescription);
+  alert(
+  "File: " +
+  formData.get("file")?.name +
+  "\nJD: " +
+  formData.get("job_description")
+);
 
   const MAX_RETRIES = 2;
   let lastError;
