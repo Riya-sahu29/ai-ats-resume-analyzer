@@ -19,12 +19,21 @@ export async function analyzeResume(resumeFile, jobDescription, onRetry) {
     try {
       if (attempt > 1 && onRetry) onRetry(attempt);
 
-      const response = await apiClient.post("/analyze-resume/", formData );
+      const response = await apiClient.post(
+        "/analyze-resume/", 
+      );
       return response.data;
 
     } catch (err) {
       lastError = err;
-      console.error(`Attempt ${attempt} failed:`, err.message);
+      alert(JSON.stringify({
+        message: err.message,
+        code: err.code,
+        status: err.response?.status,
+        data: err.response?.data,
+      })
+    );
+    console.error("Full ERROR:", err);
 
       if (err.response?.status >= 400 && err.response?.status < 500) {
         break;
