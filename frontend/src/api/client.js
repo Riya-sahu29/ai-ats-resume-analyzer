@@ -19,9 +19,7 @@ export async function analyzeResume(resumeFile, jobDescription, onRetry) {
     try {
       if (attempt > 1 && onRetry) onRetry(attempt);
 
-      const response = await apiClient.post("/analyze-resume/", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
+      const response = await apiClient.post("/analyze-resume/", formData );
       return response.data;
 
     } catch (err) {
