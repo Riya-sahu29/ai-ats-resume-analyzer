@@ -11,12 +11,12 @@ An intelligent full-stack web application that analyzes resumes using AI and pro
 
 Built using FastAPI, React, MongoDB, and Groq AI.
 
----
+--- 
 # 🌟 Why This Project?
 
 Many candidates get rejected by Applicant Tracking Systems (ATS) before recruiters even review their resumes.
 
-This AI-powered platform helps users:
+This AI-powered platform helps users:   
 
 - Improve ATS scores
 - Optimize resumes
@@ -49,7 +49,7 @@ The chatbot uses stored resume context and memory to provide personalized respon
 
 <img src="images/home.png.png" width="900"/>
 
----
+---  
 
 ## 📄 Resume Analyzer Page
 
