@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
+const BASE_URL =
+  import.meta.env.VITE_API_URL || "http://localhost:8000";
 
 const apiClient = axios.create({
   baseURL: BASE_URL,
@@ -9,37 +10,35 @@ const apiClient = axios.create({
 
 export async function analyzeResume(resumeFile, jobDescription, onRetry) {
   const formData = new FormData();
+
   formData.append("file", resumeFile);
   formData.append("job_description", jobDescription);
-  for (const pair of formData.entries()) {
-  alert(`${pair[0]}: ${pair[1]}`);
-}
 
   const MAX_RETRIES = 2;
   let lastError;
 
   for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
     try {
-      if (attempt > 1 && onRetry) onRetry(attempt);
+      if (attempt > 1 && onRetry) {
+        onRetry(attempt);
+      }
 
       const response = await apiClient.post(
-        "/analyze-resume/", 
-        formData,
+        "/analyze-resume/",
+        formData
       );
+
       return response.data;
 
     } catch (err) {
       lastError = err;
-      alert(JSON.stringify({
-        message: err.message,
-        code: err.code,
-        status: err.response?.status,
-        data: err.response?.data,
-      })
-    );
-    console.error("Full ERROR:", err);
 
-      if (err.response?.status >= 400 && err.response?.status < 500) {
+      console.error("Full ERROR:", err);
+
+      if (
+        err.response?.status >= 400 &&
+        err.response?.status < 500
+      ) {
         break;
       }
 
@@ -49,7 +48,10 @@ export async function analyzeResume(resumeFile, jobDescription, onRetry) {
     }
   }
 
-  const serverMsg = lastError?.response?.data?.error || lastError?.response?.data?.detail;
+  const serverMsg =
+    lastError?.response?.data?.error ||
+    lastError?.response?.data?.detail;
+
   const isTimeout =
     lastError?.code === "ECONNABORTED" ||
     lastError?.message?.includes("timeout");
@@ -63,19 +65,26 @@ export async function analyzeResume(resumeFile, jobDescription, onRetry) {
   throw new Error(message);
 }
 
-export async function sendChatMessage(userId, message, resumeContext = "") {
+export async function sendChatMessage(
+  userId,
+  message,
+  resumeContext = ""
+) {
   try {
     const response = await apiClient.post("/chat", {
       user_id: userId,
       message,
       resume_context: resumeContext,
     });
+
     return response.data;
+
   } catch (err) {
     const msg =
       err?.response?.data?.error ||
       err?.response?.data?.detail ||
       "Failed to get response. Please try again.";
+
     throw new Error(msg);
   }
 }
